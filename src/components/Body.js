@@ -1,43 +1,24 @@
 import RestaurentCard from "./RestaurentCard";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
-// import useRestaurantCard from "../utils/useRestaurantCard";
-import { useState, useEffect } from "react";
-import { RES_API } from "../utils/constants";
+import useRestaurantList from "../utils/useRestaurantList";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Body = () => {
-  //Local state variable = Supur powerful variable
-  const [listOfRestaurant, setlistOfRestaurants] = useState([]);
-  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+  //Local state variable = Super powerful variable
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]); //filtered retaurants
   const [searchText, setsearchText] = useState("");
-  // console.log("Body Rendered");
+  const onlineStatus = useOnlineStatus(); //fetching online status through custom hook
+  const listOfRestaurants = useRestaurantList(); //fetching restaurants list  through custom hook
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const data = await fetch(RES_API);
-
-    const json = await data.json();
-    // console.log(json);
-    setlistOfRestaurants(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurant(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-  };
-
-  const onlineStatus = useOnlineStatus();
+  // checking internet conection
 
   if (onlineStatus === false)
     return (
       <h1>Looks like you're offline!! Please Check your Internet Connection</h1>
     );
-
-  return listOfRestaurant.length === 0 ? (
+  return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body ">
@@ -45,7 +26,7 @@ const Body = () => {
         <div className="search m-4 p-4">
           <input
             type="text"
-            placeholder="Search restaurant"
+            placeholder="Search for restaurants"
             value={searchText}
             className="searchBox   border border-solid border-black"
             onChange={(e) => {
@@ -56,7 +37,7 @@ const Body = () => {
             className="px-4 py-2 m-4 bg-green-200 hover:bg-green-400 rounded-lg"
             onClick={() => {
               //Filter the restaurant card and update the UI
-              const filteredSearchList = listOfRestaurant.filter((res) =>
+              const filteredSearchList = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
 
@@ -71,10 +52,10 @@ const Body = () => {
           <button
             className="px-4 py-2 m-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
             onClick={() => {
-              const filteredList = listOfRestaurant.filter(
-                (res) => res.info.avgRating > 4.2
+              const filteredResList = listOfRestaurants.filter(
+                (res) => res.info.avgRating > 4.5
               );
-              setFilteredRestaurant(filteredList);
+              setFilteredRestaurant(filteredResList);
             }}
           >
             Top rated Restaurants
@@ -88,16 +69,25 @@ const Body = () => {
       </div>
 
       <div className="pl-14  pt-4 flex flex-wrap ">
-        {filteredRestaurant.map((restaurant) => (
-          <Link
-            key={restaurant.info.id}
-            to={"/restaurants/" + restaurant.info.id}
-            style={{ textDecoration: "none" }}
-          >
-            <RestaurentCard resData={restaurant} />
-          </Link>
-        ))}
-        {/* restaurent cards (since reusage of it create as functional component) */}
+        {filteredRestaurant.length > 0
+          ? filteredRestaurant.map((restaurant) => (
+              <Link
+                key={restaurant.info.id}
+                to={"/restaurants/" + restaurant.info.id}
+                style={{ textDecoration: "none" }}
+              >
+                <RestaurentCard resData={restaurant} />
+              </Link>
+            ))
+          : listOfRestaurants.map((restaurant) => (
+              <Link
+                key={restaurant.info.id}
+                to={"/restaurants/" + restaurant.info.id}
+                style={{ textDecoration: "none" }}
+              >
+                <RestaurentCard resData={restaurant} />
+              </Link>
+            ))}
       </div>
     </div>
   );
