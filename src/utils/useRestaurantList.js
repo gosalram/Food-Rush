@@ -3,6 +3,7 @@ import { RES_API } from "./constants";
 
 const useRestaurantList = () => {
   const [listOfRestaurants, setlistOfRestaurants] = useState([]); //All restaurants
+  console.log(listOfRestaurants);
 
   useEffect(() => {
     getRestaurants(); // fetch restaurants list
@@ -13,6 +14,7 @@ const useRestaurantList = () => {
     //making api call
     const restaurantList = await fetch(RES_API);
     const jsonResData = await restaurantList.json();
+    // console.log(jsonResData);
 
     // set restaurants list
     setlistOfRestaurants(

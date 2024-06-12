@@ -1,17 +1,19 @@
-import { LOGO_URL } from "../utils/constants";
 import logo from "../utils/logo";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   let [logInBtn, setlogInBtn] = useState("Login");
 
   const onlineStatus = useOnlineStatus();
 
+  const { loggedInUser } = useContext(UserContext);
+
   useEffect(() => {}, [logInBtn]);
   return (
-    <div className="p-4 m-2 flex justify-between bg-pink-300 shadow-lg ">
+    <div className="p-4 m-2 flex justify-between bg-green-200 shadow-lg ">
       <div>
         <img className="w-24" src={logo} />
       </div>
@@ -31,6 +33,7 @@ const Header = () => {
             <Link to="/contact">Contact</Link>
           </li>
           <li className="px-4">Cart</li>
+          <li className="px-4">{loggedInUser}</li>
           <button
             className="login-btn"
             onClick={() => {

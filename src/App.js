@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
@@ -9,15 +9,29 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import Footer from "./components/Footer";
 import Error from "./components/Error";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-// import Grocery from "./components/Grocery";
+import UserContext from "./utils/UserContext";
+import { useEffect, useState } from "react";
 
+// const [userName, setUserName] = useState();
+
+//authentication
+/* useEffect(() => {
+  //make an API call and set username and password
+  const data = {
+    name: "GOSAL",
+  };
+  setUserName(data.name);
+}, []);
+ */
 const AppLayout = () => {
   return (
-    <div className="app">
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
+    <UserContext.Provider value={{ loggedInUser: "userName" }}>
+      <div className="app">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    </UserContext.Provider>
   );
 };
 

@@ -1,9 +1,9 @@
-import RestaurentCard from "./RestaurentCard";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import RestaurentCard, { withOpenLabel } from "./RestaurentCard";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import useRestaurantList from "../utils/useRestaurantList";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const Body = () => {
   //Local state variable = Super powerful variable
@@ -11,6 +11,9 @@ const Body = () => {
   const [searchText, setsearchText] = useState("");
   const onlineStatus = useOnlineStatus(); //fetching online status through custom hook
   const listOfRestaurants = useRestaurantList(); //fetching restaurants list  through custom hook
+  // console.log(listOfRestaurants);
+
+  const RestaurantWithLabel = withOpenLabel(RestaurentCard);
 
   // checking internet conection
 
@@ -76,7 +79,12 @@ const Body = () => {
                 to={"/restaurants/" + restaurant.info.id}
                 style={{ textDecoration: "none" }}
               >
-                <RestaurentCard resData={restaurant} />
+                {/* if restaurant card is open then add label to it */}
+                {restaurant.info.isOpen ? (
+                  <RestaurantWithLabel resData={restaurant} />
+                ) : (
+                  <RestaurentCard resData={restaurant} />
+                )}
               </Link>
             ))
           : listOfRestaurants.map((restaurant) => (
@@ -85,7 +93,11 @@ const Body = () => {
                 to={"/restaurants/" + restaurant.info.id}
                 style={{ textDecoration: "none" }}
               >
-                <RestaurentCard resData={restaurant} />
+                {restaurant.info.isOpen ? (
+                  <RestaurantWithLabel resData={restaurant} />
+                ) : (
+                  <RestaurentCard resData={restaurant} />
+                )}
               </Link>
             ))}
       </div>
