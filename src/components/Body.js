@@ -10,7 +10,7 @@ const Body = () => {
   const [filteredRestaurant, setFilteredRestaurant] = useState([]); //filtered retaurants
   const [searchText, setsearchText] = useState("");
   const onlineStatus = useOnlineStatus(); //fetching online status through custom hook
-  const listOfRestaurants = useRestaurantList(); //fetching restaurants list  through custom hook
+  const listOfRestaurants = useRestaurantList() || []; //fetching restaurants list  through custom hook
   // console.log(listOfRestaurants);
 
   const RestaurantWithLabel = withOpenLabel(RestaurentCard);

@@ -31,7 +31,6 @@ const RestaurantMenu = () => {
       <p className="text-lg font-bold">
         {cuisines.join(" ,")} - {costForTwoMessage}
       </p>
-      <button className="text-left">Collapse all</button>
       {/* category accordians */}{" "}
       {/* Controlled component
             --------------------
