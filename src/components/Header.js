@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../Images/logo.png";
+import logo from "../images/logo.png";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
