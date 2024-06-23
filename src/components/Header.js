@@ -1,4 +1,5 @@
-import logo from "../utils/logo";
+import React from "react";
+import logo from "../utils/logo.png";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -18,9 +19,9 @@ const Header = () => {
 
   useEffect(() => {}, [logInBtn]);
   return (
-    <div className="p-4 m-2 flex justify-between bg-green-200 shadow-lg ">
+    <div className="p-4 m-2 flex justify-between bg-customColor shadow-lg ">
       <div>
-        <img className="w-24" src={logo} />
+        <img className="w-[6rem]" src={logo} alt="Healthy foods logo" />
       </div>
       <div className="flex items-center">
         <ul className="m-4 px-2 flex">

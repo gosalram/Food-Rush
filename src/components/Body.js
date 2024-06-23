@@ -37,7 +37,7 @@ const Body = () => {
             }}
           ></input>
           <button
-            className="px-4 py-2 m-4 bg-green-200 hover:bg-green-400 rounded-lg"
+            className="px-4 py-2 m-4 bg-gray-200 hover:bg-yellow-100 rounded-lg"
             onClick={() => {
               //Filter the restaurant card and update the UI
               const filteredSearchList = listOfRestaurants.filter((res) =>
@@ -53,7 +53,7 @@ const Body = () => {
         </div>
         <div className="search m-4 p-4 flex items-center">
           <button
-            className="px-4 py-2 m-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
+            className="px-4 py-2 m-4 bg-gray-200 hover:bg-yellow-100 rounded-lg"
             onClick={() => {
               const filteredResList = listOfRestaurants.filter(
                 (res) => res.info.avgRating > 4.5
