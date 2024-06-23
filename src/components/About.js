@@ -1,5 +1,5 @@
 import { useState } from "react";
-import food from "../Images/burger-image.png";
+import food from "../images/burger-image.png";
 
 const About = () => {
   const [show, setShow] = useState(false);
