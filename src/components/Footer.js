@@ -1,7 +1,7 @@
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <div className="p-4 m-2 flex justify-center bg-customColor shadow-lg ">
+    <div className="p-4 m-2 flex justify-center bg-white shadow-xl ">
       <strong>
         Food<span>Rush </span>&copy;
       </strong>
@@ -9,7 +9,7 @@ const Footer = () => {
       <a
         href="https://www.linkedin.com/in/gosal-ram-ab32a61a2/"
         target="_blank"
-        className=" hover:bg-yellow-100"
+        className=" hover:bg-amber-500"
       >
         &nbsp;Gosal Ram
       </a>

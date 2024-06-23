@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import RestaurentCard, { withOpenLabel } from "./RestaurentCard";
+import RestaurentCard from "./RestaurentCard";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import useRestaurantList from "../utils/useRestaurantList";
@@ -13,91 +13,78 @@ const Body = () => {
   const listOfRestaurants = useRestaurantList() || []; //fetching restaurants list  through custom hook
   // console.log(listOfRestaurants);
 
-  const RestaurantWithLabel = withOpenLabel(RestaurentCard);
+  // const RestaurantWithLabel = withOpenLabel(RestaurentCard);
 
   // checking internet conection
 
-  if (onlineStatus === false)
+  if (!onlineStatus) {
     return (
-      <h1>Looks like you're offline!! Please Check your Internet Connection</h1>
+      <h1 className="text-center text-red-500 mt-10">
+        Looks like you're offline!! Please check your internet connection.
+      </h1>
     );
+  }
+
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body ">
-      <div className="filter flex ">
-        <div className="search m-4 p-4">
+    <div className="body p-4">
+      <div className="filter flex flex-col items-center mb-6">
+        <div className="search flex items-center mb-4 font-semibold">
           <input
             type="text"
             placeholder="Search for restaurants"
             value={searchText}
-            className="searchBox   border border-solid border-black"
-            onChange={(e) => {
-              setsearchText(e.target.value);
-            }}
-          ></input>
+            className="searchBox border border-solid border-black rounded-lg px-4 py-2"
+            onChange={(e) => setsearchText(e.target.value)}
+          />
           <button
-            className="px-4 py-2 m-4 bg-gray-200 hover:bg-yellow-100 rounded-lg"
+            className="ml-4 bg-gray-200 hover:bg-amber-500 text-black hover:text-white rounded-lg px-8 py-3 transition-colors"
             onClick={() => {
-              //Filter the restaurant card and update the UI
               const filteredSearchList = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
-
               setFilteredRestaurant(filteredSearchList);
-              // console.log(searchText);
             }}
           >
             Search
           </button>
-        </div>
-        <div className="search m-4 p-4 flex items-center">
           <button
-            className="px-4 py-2 m-4 bg-gray-200 hover:bg-yellow-100 rounded-lg"
+            className="ml-4 bg-gray-200 hover:bg-amber-500 text-black hover:text-white rounded-lg px-8 py-3 transition-colors"
             onClick={() => {
               const filteredResList = listOfRestaurants.filter(
-                (res) => res.info.avgRating > 4.5
+                (res) => res.info.avgRating > 4
               );
               setFilteredRestaurant(filteredResList);
             }}
           >
-            Top rated Restaurants
+            Top Rated Restaurants
           </button>
         </div>
       </div>
-      <div>
+      <div className="mb-6">
         <h1 className="text-2xl font-bold">
           Restaurants with online food delivery in Koramangala
         </h1>
       </div>
-
-      <div className="pl-14  pt-4 flex flex-wrap ">
+      <div className="flex flex-wrap justify-center gap-6">
         {filteredRestaurant.length > 0
           ? filteredRestaurant.map((restaurant) => (
               <Link
                 key={restaurant.info.id}
-                to={"/restaurants/" + restaurant.info.id}
-                style={{ textDecoration: "none" }}
+                to={`/restaurants/${restaurant.info.id}`}
+                className="no-underline"
               >
-                {/* if restaurant card is open then add label to it */}
-                {restaurant.info.isOpen ? (
-                  <RestaurantWithLabel resData={restaurant} />
-                ) : (
-                  <RestaurentCard resData={restaurant} />
-                )}
+                <RestaurentCard resData={restaurant} />
               </Link>
             ))
           : listOfRestaurants.map((restaurant) => (
               <Link
                 key={restaurant.info.id}
-                to={"/restaurants/" + restaurant.info.id}
-                style={{ textDecoration: "none" }}
+                to={`/restaurants/${restaurant.info.id}`}
+                className="no-underline"
               >
-                {restaurant.info.isOpen ? (
-                  <RestaurantWithLabel resData={restaurant} />
-                ) : (
-                  <RestaurentCard resData={restaurant} />
-                )}
+                <RestaurentCard resData={restaurant} />
               </Link>
             ))}
       </div>

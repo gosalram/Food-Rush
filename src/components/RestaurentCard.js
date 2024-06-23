@@ -1,41 +1,33 @@
 import { CDN_URL } from "../utils/constants";
-import { useContext } from "react";
-import UserContext from "../utils/UserContext";
+import star from "../Images/star.png";
 
 const RestaurentCard = (props) => {
   const { resData } = props;
 
-  const {
-    cloudinaryImageId,
-    name,
-    cuisines,
-    areaName,
-    avgRating,
-    costForTwo,
-    isOpen,
-  } = resData?.info;
-  const { lastMileTravelString, deliveryTime } = resData?.info.sla;
-  const { loggedInUser } = useContext(UserContext);
-  console.log(loggedInUser);
+  const { cloudinaryImageId, name, cuisines, areaName, avgRating, costForTwo } =
+    resData?.info;
+  const { lastMileTravelString } = resData?.info.sla;
 
   return (
-    <div className="res-card m-4 p-4 w-[250px] bg-gray-200 rounded-lg hover:bg-gray-400 transition-all">
-      {
-        <img
-          className="w-[275px] h-[175px] rounded-lg"
-          src={CDN_URL + cloudinaryImageId}
-        />
-      }
-      <h2 className="font-bold py-4 text-lg ">{name}</h2>
-      <h4>{cuisines.join(", ")}</h4>
-      <h4>{areaName}</h4>
-      <span>
-        <h4>{avgRating}</h4>
-        <h4>{lastMileTravelString}</h4>
-        <h4>{costForTwo}</h4>
-      </span>
-      <h4>{deliveryTime} minutes</h4>
-      <h4>User name: {loggedInUser}</h4>
+    <div className="res-card m-2 p-4 w-[275px] bg-white shadow-lg rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+      <img
+        className="w-[275px] h-[175px] rounded-t-lg object-cover"
+        src={CDN_URL + cloudinaryImageId}
+        alt={name}
+      />
+      <div className="p-3">
+        <h2 className="font-bold text-lg mb-2">{name}</h2>
+        <p className="text-gray-700 mb-2 font-light">{cuisines.join(", ")}</p>
+        <p className="text-gray-500 mb-2 font-extralight">{areaName}</p>
+        <div className="font-semibold flex items-center justify-between text-gray-700 mb-2 text-sm">
+          <span className="flex items-center">
+            <img className="w-5" src={star} alt="star symbol" />
+            <h4>&nbsp;{avgRating}&nbsp;•</h4>
+          </span>
+          <h4> {lastMileTravelString}&nbsp;•</h4>
+          <h4>{costForTwo}</h4>
+        </div>
+      </div>
     </div>
   );
 };
@@ -43,7 +35,7 @@ const RestaurentCard = (props) => {
 // input  -Restaurant card(component) => Restaurant Card with is open label
 // This higher order componet will generate a Restaurant card for us
 
-export const withOpenLabel = (RestaurentCard) => {
+/* export const withOpenLabel = (RestaurentCard) => {
   return (props) => {
     return (
       <div>
@@ -54,6 +46,6 @@ export const withOpenLabel = (RestaurentCard) => {
       </div>
     );
   };
-};
+}; */
 
 export default RestaurentCard;

@@ -1,9 +1,8 @@
 import React from "react";
-import logo from "../utils/logo.png";
-import { useState, useEffect, useContext } from "react";
+import logo from "../Images/logo.png";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
 
 const Header = () => {
@@ -11,47 +10,44 @@ const Header = () => {
 
   const onlineStatus = useOnlineStatus();
 
-  const { loggedInUser } = useContext(UserContext);
-
   const cartItems = useSelector((store) => store.cart.items);
 
   //Subscribing to the store using a selector
 
   useEffect(() => {}, [logInBtn]);
   return (
-    <div className="p-4 m-2 flex justify-between bg-customColor shadow-lg ">
+    <div className="flex justify-between items-stretch bg-white shadow-lg p-4 font-bold">
       <div>
-        <img className="w-[6rem]" src={logo} alt="Healthy foods logo" />
+        <img className="w-24" src={logo} alt="Food Rush logo" />
       </div>
       <div className="flex items-center">
-        <ul className="m-4 px-2 flex">
-          <li className="px-4">Online Status : {onlineStatus ? "✅" : "🔴"}</li>
-          <li className="px-4">
+        <ul className="flex space-x-2">
+          <li className="hover:bg-amber-500 rounded-lg px-4 py-2">
             <Link to="/">Home</Link>
           </li>
-          <li className="px-4">
+          <li className="hover:bg-amber-500 rounded-lg px-4 py-2 transition-colors">
             <Link to="/about">About</Link>
           </li>
-          <li className="px-4">
-            <Link to="/grocery">Grocery</Link>
-          </li>
-          <li className="px-4">
+          <li className="hover:bg-amber-500 rounded-lg px-4 py-2 transition-colors">
             <Link to="/contact">Contact</Link>
           </li>
-          <li className="px-4 font-bold text-lg">
-            <Link to="/cart">Cart-( {cartItems.length}items)</Link>
+          <li className="font-bold text-lg px-4 py-2">
+            <Link to="/cart">Cart ({cartItems.length} items)</Link>
           </li>
-          <li className="px-4">{loggedInUser}</li>
-          <button
-            className="login-btn"
-            onClick={() => {
-              logInBtn === "Login"
-                ? setlogInBtn("Logout")
-                : setlogInBtn("Login");
-            }}
-          >
-            {logInBtn}
-          </button>
+          <li>
+            <button
+              className="bg-amber-500 text-white px-4 py-2 rounded-lg transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-600"
+              onClick={() => {
+                logInBtn === "Login"
+                  ? setlogInBtn("Logout")
+                  : setlogInBtn("Login");
+              }}
+              aria-label={logInBtn}
+            >
+              {logInBtn}
+            </button>
+          </li>
+          <li className="px-4 py-2">{onlineStatus ? "🟢" : "🔴"}</li>
         </ul>
       </div>
     </div>
